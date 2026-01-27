@@ -4,7 +4,7 @@ A Java-based fake news and clickbait detector powered by Google's Gemini AI API.
 
 ## Overview
 
-SA-fake-Detector is a command-line application that analyzes text content to determine whether it contains fake news or clickbait. The application leverages Google's Gemini 2.5 Flash model to perform intelligent content analysis and provide confidence scores along with explanations in Romanian.
+SA-fake-Detector is a command-line application that analyzes text content to determine whether it contains fake news or clickbait. The application leverages Google's Gemini AI API to perform intelligent content analysis and provide confidence scores along with explanations in Romanian.
 
 ## Objective
 
@@ -18,7 +18,7 @@ The primary objective of this project is to combat misinformation by providing a
 
 - **Text Analysis**: Analyze any text input to detect fake news or clickbait
 - **URL Support**: Automatically scrape and analyze content from web pages
-- **AI-Powered Detection**: Uses Google's Gemini 2.5 Flash model for intelligent analysis
+- **AI-Powered Detection**: Uses Google's Gemini AI API for intelligent analysis
 - **JSON Output**: Returns structured JSON responses for easy integration
 - **Romanian Language Support**: Provides explanations in Romanian
 - **Confidence Scoring**: Includes confidence levels (1-100) for each detection
@@ -48,7 +48,7 @@ The primary objective of this project is to combat misinformation by providing a
 
 2. **Set up Gemini API Key**:
    
-   Obtain an API key from [Google AI Studio](https://makersuite.google.com/app/apikey) and set it as an environment variable:
+   Obtain an API key from [Google AI Studio](https://aistudio.google.com/app/apikey) and set it as an environment variable:
    
    ```bash
    export GEMINI_API_KEY="your-api-key-here"
@@ -63,6 +63,8 @@ The primary objective of this project is to combat misinformation by providing a
 
 ### Running with Maven
 
+> **Note**: The project currently has a configuration mismatch in `pom.xml`. The Maven shade plugin is configured with `org.example.cli.GeminiDetector` as the main class, but the actual main class is `org.example.Main`. When running with Maven exec plugin directly (as shown below), this works correctly.
+
 **Analyze text directly**:
 ```bash
 mvn exec:java -Dexec.mainClass="org.example.Main" -Dexec.args="Your text to analyze"
@@ -75,7 +77,9 @@ mvn exec:java -Dexec.mainClass="org.example.Main" -Dexec.args="https://example.c
 
 ### Running the JAR
 
-After building, you can run the generated JAR file:
+> **Note**: Due to the pom.xml configuration issue mentioned above, the shaded JAR built by Maven may not execute properly. To fix this, the `mainClass` in pom.xml should be changed from `org.example.cli.GeminiDetector` to `org.example.Main`, then rebuild with `mvn clean package`.
+
+After fixing and building, you can run the generated JAR file:
 
 ```bash
 java -jar target/fake-detector-1.0-SNAPSHOT.jar "Your text to analyze"
@@ -143,7 +147,7 @@ SA-fake-Detector/
 
 ### API Endpoint
 
-The application uses Google's Gemini 2.5 Flash model:
+The application uses Google's Gemini AI API (model identifier in code: gemini-2.5-flash):
 ```
 https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
 ```
