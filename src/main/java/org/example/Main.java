@@ -24,7 +24,7 @@ public class Main {
         }
         else
         {
-            textToAnalyze = "Pamantul este plat si are 20 de luni intr-un an";
+            textToAnalyze = "COVID-19 a izbucnit in 2023";
         }
 
 
