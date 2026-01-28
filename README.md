@@ -24,11 +24,14 @@ The primary objective of this project is to provide a simple, automated way to v
 ```
 SA-fake-Detector/
 ├── src/
-│   └── main/
+│   ├── main/
+│   │   └── java/
+│   │       └── org/
+│   │           └── example/
+│   │               └── Main.java          # Main application logic
+│   └── test/
 │       └── java/
-│           └── org/
-│               └── example/
-│                   └── Main.java          # Main application logic
+│           └── MainTest.java              # Unit tests
 ├── pom.xml                                 # Maven configuration and dependencies
 ├── .gitignore                              # Git ignore rules
 └── README.md                               # This file
@@ -40,7 +43,12 @@ SA-fake-Detector/
   - Command-line argument processing
   - Web scraping functionality using Jsoup
   - Gemini AI API integration
-  - JSON response formatting
+  - JSON response formatting and extraction
+
+- **MainTest.java**: Contains unit tests including:
+  - Test for extracting content from Google Gemini API responses
+  - Test for environment variable configuration
+  - Test for web scraping functionality with Jsoup
 
 ## Prerequisites
 
@@ -55,6 +63,10 @@ The project uses the following dependencies (managed via Maven):
 - **org.json:json** (v20231013) - JSON processing
 - **org.jsoup:jsoup** (v1.17.2) - HTML parsing and web scraping
 - **org.junit.jupiter:junit-jupiter** (v5.10.0) - Unit testing framework
+
+## Build Configuration
+
+The project uses **Maven Shade Plugin** (v3.5.0) to create an executable JAR file with all dependencies bundled. This allows for easy deployment and execution without managing external dependencies.
 
 ## Setup
 
@@ -140,17 +152,25 @@ mvn clean compile
 
 ### Running Tests
 
+The project includes comprehensive unit tests covering:
+- Content extraction from Gemini API responses
+- Environment variable configuration
+- Web scraping with Jsoup
+
+Run tests with:
 ```bash
 mvn test
 ```
 
 ### Creating Executable JAR
 
+The project uses Maven Shade Plugin to create a single executable JAR with all dependencies:
+
 ```bash
 mvn clean package
 ```
 
-The executable JAR will be created in the `target/` directory.
+The executable JAR will be created in the `target/` directory as `fake-detector-1.0-SNAPSHOT.jar`.
 
 ## Configuration
 
