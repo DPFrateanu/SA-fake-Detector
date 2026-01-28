@@ -16,7 +16,6 @@ public class Main {
     private static final String API_KEY = System.getenv("GEMINI_API_KEY");
 
     public static void main(String[] args) {
-        // Verificăm dacă avem input
         String textToAnalyze = "";
 
         if(args.length > 0){
@@ -87,22 +86,28 @@ public class Main {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() == 200) {
-            // Extragem răspunsul text din structura complexă Google
-            JSONObject jsonRes = new JSONObject(response.body());
-            String rawText = jsonRes.getJSONArray("candidates")
-                    .getJSONObject(0)
-                    .getJSONObject("content")
-                    .getJSONArray("parts")
-                    .getJSONObject(0)
-                    .getString("text");
-
-            return rawText.replace("```json", "").replace("```", "").trim();
+            return extractContent(response.body());
         } else {
             return new JSONObject()
                     .put("error", "Eroare API Gemini: " + response.statusCode())
                     .put("details", response.body())
                     .toString();
         }
+    }
+
+    public static String extractContent(String responseBody) {
+        // Extragem răspunsul text din structura complexă Google
+
+        JSONObject jsonRes = new JSONObject(responseBody);
+        String rawText = jsonRes.getJSONArray("candidates")
+                .getJSONObject(0)
+                .getJSONObject("content")
+                .getJSONArray("parts")
+                .getJSONObject(0)
+                .getString("text");
+
+        return rawText.replace("```json", "").replace("```", "").trim();
+
     }
 
     private static void printError(String message) {
