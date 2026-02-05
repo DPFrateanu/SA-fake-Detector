@@ -67,7 +67,8 @@ public class Main {
                 {
                     "is_fake": true/false,
                     "confidence": (număr 1-100),
-                    "reason": "scurta explicație în română"
+                    "reason": "scurta explicație în română",
+                    "source": "link articol/articole de unde ai tras concluzia"
                 }
                 """.formatted(text.replace("\"", "'")); // Evităm stricarea JSON-ului prin ghilimele interne
 
