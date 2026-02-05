@@ -118,7 +118,8 @@ The application returns a JSON response with the following structure:
 {
   "is_fake": true,
   "confidence": 95,
-  "reason": "Explanarea in romana despre de ce textul este considerat fake news"
+  "reason": "Explanarea in romana despre de ce textul este considerat fake news",
+  "source": "link articol/articole de unde ai tras concluzia"
 }
 ```
 
