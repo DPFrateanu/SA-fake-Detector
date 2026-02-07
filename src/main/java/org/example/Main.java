@@ -5,6 +5,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -59,7 +62,11 @@ public class Main {
 
     private static String callGemini(String text) throws IOException, InterruptedException {
         // Prompt Engineering: Instruim Gemini să fie un detector strict JSON
+        String todayDate = LocalDate.now().toString();
         String prompt = """
+                
+                Astazi e data de "%s".
+                Foloseste data curenta pentru a detecta inconsistente cronologice
                 Analizează următorul text și decide dacă este Fake News sau Clickbait.
                 Text: "%s"
                 
@@ -70,7 +77,7 @@ public class Main {
                     "reason": "scurta explicație în română",
                     "source": "link articol/articole de unde ai tras concluzia"
                 }
-                """.formatted(text.replace("\"", "'")); // Evităm stricarea JSON-ului prin ghilimele interne
+                """.formatted(todayDate,text.replace("\"", "'")); // Evităm stricarea JSON-ului prin ghilimele interne
 
         // Construim structura JSON cerută de Google API
         JSONObject userPart = new JSONObject().put("text", prompt);
