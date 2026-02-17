@@ -38,7 +38,7 @@ public class Main {
         String input = textToAnalyze;
 
         try {
-            // 2. Dacă e link, extragem textul din el (Scraping)
+            // Dacă e link, extragem textul din el (Scraping)
             if (input.startsWith("http")) {
 
                 Document doc = Jsoup.connect(input).get();
@@ -51,9 +51,15 @@ public class Main {
             }
 
             String jsonResponse = callGemini(textToAnalyze);
-
-            // 4. Afișăm rezultatul final la STDOUT (pentru a fi preluat de aplicatia mare)
-            System.out.println(jsonResponse);
+            // afisare raspuns JSON pentru aplicatia mare
+            try {
+                // Creăm un flux de ieșire special care ignoră setările Windows și folosește UTF-8
+                java.io.PrintStream utf8Out = new java.io.PrintStream(System.out, true, "UTF-8");
+                utf8Out.println(jsonResponse);
+            } catch (java.io.UnsupportedEncodingException e) {
+                System.err.println("Eroare la setarea encoding-ului: " + e.getMessage());
+                System.out.println(jsonResponse);
+            }
 
         } catch (Exception e) {
             printError("Eroare la procesare: " + e.getMessage());
